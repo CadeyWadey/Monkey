@@ -1,0 +1,50 @@
+// Define an array of words for the game
+const words = ["apple", "banana", "cherry", "date", "elderberry"];
+
+// Choose a random word from the array
+const randomWord = words[Math.floor(Math.random() * words.length)];
+
+// Initialize variables
+let lives = 6; // Number of lives
+let guessedLetters = []; // Array to store guessed letters
+
+// Display initial message
+console.log("Welcome to Hangman! Guess the letters to reveal the word.");
+
+// Function to display the word with underscores for unguessed letters
+function displayWord() {
+    let display = "";
+    for (const letter of randomWord) {
+        if (guessedLetters.includes(letter)) {
+            display += letter;
+        } else {
+            display += "_";
+        }
+    }
+    return display;
+}
+
+// Function to check if the guessed letter is correct
+function checkGuess(letter) {
+    if (randomWord.includes(letter)) {
+        guessedLetters.push(letter);
+        console.log(`Correct! Word: ${displayWord()}`);
+    } else {
+        lives--;
+        console.log(`Incorrect! Lives remaining: ${lives}`);
+    }
+}
+
+// Main game loop
+while (lives > 0) {
+    const guess = prompt("Guess a letter:").toLowerCase();
+    checkGuess(guess);
+    if (displayWord() === randomWord) {
+        console.log("Congratulations! You guessed the word.");
+        break;
+    }
+}
+
+if (lives === 0) {
+    console.log(`Game over! The word was "${randomWord}".`);
+}
